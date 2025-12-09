@@ -1,17 +1,7 @@
 import type { Metadata } from "next";
-import { Manrope, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-});
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Hempstead Chamber of Commerce",
@@ -25,11 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${manrope.variable} ${montserrat.variable} antialiased`}
-      >
+      <body className="antialiased">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

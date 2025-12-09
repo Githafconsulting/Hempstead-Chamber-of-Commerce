@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
+/* Mosvita Font Family */
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/Mosvita-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --color-50: #E7EFFE;
   --color-100: #BBD3FC;
@@ -31,16 +80,35 @@
   --color-primary-800: var(--color-800);
   --color-primary-900: var(--color-900);
   --color-primary-950: var(--color-950);
-  --font-sans: var(--font-manrope);
-  --font-heading: var(--font-montserrat);
+  --font-sans: 'Mosvita', Arial, Helvetica, sans-serif;
+  --font-heading: 'Mosvita', Arial, Helvetica, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  font-family: 'Mosvita', Arial, Helvetica, sans-serif;
 }
 
-h1 {
-  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Mosvita', Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
