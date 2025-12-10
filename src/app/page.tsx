@@ -6,6 +6,7 @@ import OurCommunity from "@/components/OurCommunity";
 import FeaturedBusinesses from "@/components/FeaturedBusinesses";
 import Testimonials from "@/components/Testimonials";
 import UpcomingEvents from "@/components/UpcomingEvents";
+import NewsUpdates from "@/components/NewsUpdates";
 import SupportLocalBusinesses from "@/components/SupportLocalBusinesses";
 import CTABanner from "@/components/CTABanner";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Testimonials />
       <FeaturedBusinesses />
       <UpcomingEvents />
+      <NewsUpdates />
       <SupportLocalBusinesses />
       <CTABanner />
     </main>

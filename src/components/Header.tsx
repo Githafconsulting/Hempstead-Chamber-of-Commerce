@@ -20,6 +20,7 @@ const mainNavItems: MenuItem[] = [
     ],
   },
   { label: "Events", href: "/event-highlights" },
+  { label: "News & Updates", href: "/news-updates" },
   {
     label: "About",
     href: "/about",
