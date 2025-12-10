@@ -21,6 +21,36 @@ const testimonials = [
     business: "Bright Futures Childcare",
     role: "Director",
   },
+  {
+    quote: "The educational workshops provided by the Chamber have been invaluable. I've learned strategies that directly increased my revenue by 40% this year.",
+    name: "David Chen",
+    business: "Chen Digital Marketing",
+    role: "CEO",
+  },
+  {
+    quote: "Being a Chamber member has opened doors I never knew existed. The business connections and referrals have been amazing for my company's growth.",
+    name: "Sarah Williams",
+    business: "Williams Consulting Group",
+    role: "Managing Partner",
+  },
+  {
+    quote: "The Chamber team is always available to help. They connected me with local vendors and helped me navigate the challenges of starting my first business.",
+    name: "Michael Brown",
+    business: "Brown's Bakery & Cafe",
+    role: "Owner",
+  },
+  {
+    quote: "I've attended every Chamber event this year. The quality of connections and the supportive community atmosphere is unlike anything I've experienced before.",
+    name: "Jennifer Martinez",
+    business: "Martinez Financial Services",
+    role: "Financial Advisor",
+  },
+  {
+    quote: "The Chamber's advocacy for small businesses in Hempstead makes a real difference. They truly care about helping local businesses succeed and thrive.",
+    name: "Robert Taylor",
+    business: "Taylor Home Services",
+    role: "President",
+  },
 ];
 
 export default function Testimonials() {
