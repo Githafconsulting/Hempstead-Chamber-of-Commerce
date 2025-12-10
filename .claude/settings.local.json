@@ -11,7 +11,9 @@
       "Bash(npm install:*)",
       "Bash(dir:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nMake website mobile-friendly and add new components\n\n- Add mobile responsiveness to all components (Header, Hero, Stats, WhyJoin, AboutUs, OurCommunity, Testimonials, FeaturedBusinesses, UpcomingEvents, SupportLocalBusinesses, CTABanner, Footer)\n- Replace local video with YouTube embed in Hero section\n- Update FeaturedBusinesses with new business listings and images\n- Add new pages (About, Contact, Event Highlights, Youth Services)\n- Add custom Mosvita fonts\n- Center text on mobile for AboutUs and OurCommunity sections\n- Add various component files and assets\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nMake website mobile-friendly and add new components\n\n- Add mobile responsiveness to all components (Header, Hero, Stats, WhyJoin, AboutUs, OurCommunity, Testimonials, FeaturedBusinesses, UpcomingEvents, SupportLocalBusinesses, CTABanner, Footer)\n- Replace local video with YouTube embed in Hero section\n- Update FeaturedBusinesses with new business listings and images\n- Add new pages (About, Contact, Event Highlights, Youth Services)\n- Add custom Mosvita fonts\n- Center text on mobile for AboutUs and OurCommunity sections\n- Add various component files and assets\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nUpdate Claude Code settings to auto-approve git push\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
