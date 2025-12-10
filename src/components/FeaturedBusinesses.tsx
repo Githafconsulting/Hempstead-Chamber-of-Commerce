@@ -250,7 +250,7 @@ export default function FeaturedBusinesses() {
                 className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group"
               >
                 {/* Business Image */}
-                <div className="h-32 sm:h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center relative overflow-hidden">
+                <div className="h-32 sm:h-48 bg-primary-100 flex items-center justify-center relative overflow-hidden">
                   {business.image ? (
                     <Image
                       src={business.image}
@@ -323,7 +323,7 @@ export default function FeaturedBusinesses() {
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Business Image */}
-                  <div className="md:w-64 h-48 md:h-auto bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center shrink-0 relative overflow-hidden">
+                  <div className="md:w-64 h-48 md:h-auto bg-primary-100 flex items-center justify-center shrink-0 relative overflow-hidden">
                     {business.image ? (
                       <Image
                         src={business.image}

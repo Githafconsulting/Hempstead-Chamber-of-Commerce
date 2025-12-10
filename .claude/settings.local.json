@@ -13,7 +13,10 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nMake website mobile-friendly and add new components\n\n- Add mobile responsiveness to all components (Header, Hero, Stats, WhyJoin, AboutUs, OurCommunity, Testimonials, FeaturedBusinesses, UpcomingEvents, SupportLocalBusinesses, CTABanner, Footer)\n- Replace local video with YouTube embed in Hero section\n- Update FeaturedBusinesses with new business listings and images\n- Add new pages (About, Contact, Event Highlights, Youth Services)\n- Add custom Mosvita fonts\n- Center text on mobile for AboutUs and OurCommunity sections\n- Add various component files and assets\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git push)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nUpdate Claude Code settings to auto-approve git push\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nUpdate Claude Code settings to auto-approve git push\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote set-url:*)",
+      "Bash(npm run build:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nImprove homepage layout with modern design\n\n- Streamline homepage from 10 sections to 6 for better flow\n- Use combined AboutAndBenefits component for side-by-side layout\n- Use combined TestimonialsAndEvents component for better visual balance\n- Remove gradient backgrounds from FeaturedBusinesses per design requirements\n- Remove redundant sections (WhyJoin, AboutUs, OurCommunity, SupportLocalBusinesses)\n- Maintain current theme without emojis or gradients\n- Build verified successfully\n\nGenerated with Claude Code\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
