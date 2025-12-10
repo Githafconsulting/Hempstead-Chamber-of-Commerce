@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 export default function CTABanner() {
   return (
@@ -23,7 +22,9 @@ export default function CTABanner() {
             className="inline-flex items-center justify-center gap-2 bg-white text-primary-900 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-gray-100 transition-colors text-sm sm:text-base"
           >
             Join Now
-            <ArrowOutwardIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
           </Link>
           <Link
             href="/contact"

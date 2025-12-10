@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 type Business = {
   name: string;
@@ -305,7 +304,9 @@ export default function FeaturedBusinesses() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors"
                   >
                     Read More
-                    <ArrowOutwardIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
                   </Link>
                 </div>
               </div>
@@ -433,7 +434,9 @@ export default function FeaturedBusinesses() {
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-wide text-white bg-primary-600 rounded-full hover:bg-primary-700 transition-colors font-heading"
           >
             View All Businesses
-            <ArrowOutwardIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
           </Link>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 export default function AboutUs() {
   const highlights = [
@@ -107,7 +106,9 @@ export default function AboutUs() {
               className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-full font-bold hover:bg-primary-700 transition-colors"
             >
               Learn More About Us
-              <ArrowOutwardIcon className="w-5 h-5" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
             </Link>
           </div>
         </div>
