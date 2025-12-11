@@ -57,12 +57,12 @@ export default function Header() {
 
   return (
     <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "px-0 pt-0"
-            : "px-4 sm:px-6 lg:px-8 pt-4"
-        }`}
-      >
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "px-0 pt-0"
+          : "px-4 sm:px-6 lg:px-8 pt-4"
+      }`}
+    >
       <div
         className={`w-full transition-all duration-300 ${
           isScrolled
@@ -165,24 +165,52 @@ export default function Header() {
               </svg>
             </button>
           </div>
+        </div>
+      </div>
 
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden mt-4 pt-4 border-t border-gray-200/50">
-              {/* Mobile Nav Items */}
-              <nav className="space-y-1 font-heading mb-4">
-                {mainNavItems.map((item) => (
-                  <div key={item.label}>
-                    {item.subItems ? (
+      {/* Mobile Navigation Overlay */}
+      <div
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ${
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="absolute inset-0 bg-primary-950/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+
+        <div
+          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-white shadow-2xl transition-transform duration-300 ${
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col h-full">
+            {/* Mobile Header */}
+            <div className="flex items-center justify-between p-5 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
+                <span className="font-bold text-primary-900">Menu</span>
+              </div>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Mobile Nav Items */}
+            <nav className="flex-1 overflow-y-auto py-4 px-4">
+              {mainNavItems.map((item) => (
+                <div key={item.label} className="mb-1">
+                  {item.subItems ? (
+                    <>
                       <button
-                        onClick={() =>
-                          setOpenDropdown(openDropdown === item.label ? null : item.label)
-                        }
-                        className="w-full flex items-center justify-between px-3 py-3 text-sm font-semibold rounded-lg transition-colors text-gray-800 hover:bg-gray-100"
+                        onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                        className="w-full flex items-center justify-between px-4 py-3.5 text-base font-semibold rounded-xl transition-colors text-gray-800 hover:bg-primary-50"
                       >
                         <span>{item.label}</span>
                         <svg
-                          className={`w-4 h-4 transition-transform ${
+                          className={`w-4 h-4 transition-transform duration-200 ${
                             openDropdown === item.label ? "rotate-180" : ""
                           }`}
                           fill="none"
@@ -192,54 +220,57 @@ export default function Header() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="block px-3 py-3 text-sm font-semibold rounded-lg transition-colors text-gray-800 hover:bg-gray-100"
-                        onClick={() => setMobileMenuOpen(false)}
+
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ${
+                          openDropdown === item.label ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+                        }`}
                       >
-                        {item.label}
-                      </Link>
-                    )}
-
-                    {/* Mobile Submenu */}
-                    {item.subItems && openDropdown === item.label && (
-                      <div className="ml-4 mt-1 space-y-1 border-l-2 pl-4 border-primary-200">
-                        {item.subItems.map((subItem) => (
-                          <Link
-                            key={subItem.label}
-                            href={subItem.href}
-                            className="block py-2 text-sm transition-colors text-gray-600 hover:text-primary-600"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            {subItem.label}
-                          </Link>
-                        ))}
+                        <div className="ml-4 pl-4 border-l-2 border-primary-200 py-2">
+                          {item.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="block py-2.5 text-sm text-gray-600 hover:text-primary-600 transition-colors"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                ))}
-              </nav>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="block px-4 py-3.5 text-base font-semibold rounded-xl transition-colors text-gray-800 hover:bg-primary-50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </nav>
 
-              {/* Mobile CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 font-heading pb-4">
-                <Link
-                  href="/donate"
-                  className="flex-1 text-center px-4 py-3 text-sm font-bold uppercase tracking-wide border-2 rounded-full transition-colors text-primary-600 border-primary-600 hover:bg-primary-50"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Donate
-                </Link>
-                <Link
-                  href="/join"
-                  className="flex-1 text-center px-4 py-3 text-sm font-bold uppercase tracking-wide rounded-full transition-colors text-white bg-primary-600 hover:bg-primary-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Join Chamber
-                </Link>
-              </div>
+            {/* Mobile CTA Buttons */}
+            <div className="p-5 border-t border-gray-100 space-y-3">
+              <Link
+                href="/donate"
+                className="block w-full text-center px-5 py-3 text-sm font-bold tracking-wide border-2 border-primary-600 text-primary-600 rounded-xl hover:bg-primary-50 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Donate
+              </Link>
+              <Link
+                href="/join"
+                className="block w-full text-center px-5 py-3 text-sm font-bold tracking-wide bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors shadow-lg shadow-primary-600/25"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Join Chamber
+              </Link>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </header>

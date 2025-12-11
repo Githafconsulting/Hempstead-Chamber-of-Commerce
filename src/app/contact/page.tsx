@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+
+type FormErrors = {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+};
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,59 +18,128 @@ export default function ContactPage() {
     message: "",
   });
 
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.subject) {
+      newErrors.subject = "Please select a subject";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
-    alert("Thank you for your message! We will get back to you soon.");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    // Simulate API call
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setSubmitStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-primary-600 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white font-heading mb-4">
+      <section className="relative py-20 sm:py-28 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-950 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
+            <span className="w-2 h-2 bg-primary-400 rounded-full" />
+            <span className="text-white/90 font-medium text-sm">Get In Touch</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
             Contact Us
           </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            We'd love to hear from you. Get in touch with the Hempstead Chamber of Commerce.
+          <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
       </section>
 
       {/* Contact Content */}
-      <section className="py-16 bg-white">
+      <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Information */}
             <div>
-              <h2 className="text-3xl font-bold text-primary-900 font-heading mb-6">
+              <h2 className="text-3xl font-bold text-primary-900 mb-6">
                 Get In Touch
               </h2>
-              <p className="text-gray-700 leading-relaxed mb-8">
-                Have questions about membership, events, or how the Chamber can help your business?
-                Reach out to us and we'll be happy to assist you.
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Have questions about membership, events, or how the Chamber can help your business? Reach out to us and we&apos;ll be happy to assist you.
               </p>
 
               <div className="space-y-6">
                 {/* Address */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary-900 font-heading">Address</h3>
-                    <p className="text-gray-700">
+                    <h3 className="font-bold text-primary-900 mb-1">Address</h3>
+                    <p className="text-gray-600">
                       1776 Denton Park<br />
                       Hempstead, NY 11550
                     </p>
@@ -73,14 +148,14 @@ export default function ContactPage() {
 
                 {/* Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary-900 font-heading">Phone</h3>
-                    <a href="tel:516-292-3800" className="text-gray-700 hover:text-primary-600 transition-colors">
+                    <h3 className="font-bold text-primary-900 mb-1">Phone</h3>
+                    <a href="tel:516-292-3800" className="text-gray-600 hover:text-primary-600 transition-colors">
                       (516) 292-3800
                     </a>
                   </div>
@@ -88,14 +163,14 @@ export default function ContactPage() {
 
                 {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary-900 font-heading">Email</h3>
-                    <a href="mailto:info@hempsteadchamber.org" className="text-gray-700 hover:text-primary-600 transition-colors">
+                    <h3 className="font-bold text-primary-900 mb-1">Email</h3>
+                    <a href="mailto:info@hempsteadchamber.org" className="text-gray-600 hover:text-primary-600 transition-colors">
                       info@hempsteadchamber.org
                     </a>
                   </div>
@@ -103,14 +178,14 @@ export default function ContactPage() {
 
                 {/* Hours */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary-900 font-heading">Office Hours</h3>
-                    <p className="text-gray-700">
+                    <h3 className="font-bold text-primary-900 mb-1">Office Hours</h3>
+                    <p className="text-gray-600">
                       Monday - Friday: 9:00 AM - 5:00 PM<br />
                       Saturday - Sunday: Closed
                     </p>
@@ -119,12 +194,14 @@ export default function ContactPage() {
               </div>
 
               {/* Social Media */}
-              <div className="mt-10">
-                <h3 className="text-lg font-bold text-primary-900 font-heading mb-4">Follow Us</h3>
-                <div className="flex gap-4">
+              <div className="mt-10 pt-8 border-t border-gray-100">
+                <h3 className="font-bold text-primary-900 mb-4">Follow Us</h3>
+                <div className="flex gap-3">
                   <a
-                    href="#"
-                    className="w-12 h-12 bg-primary-600 hover:bg-primary-700 rounded-full flex items-center justify-center transition-colors"
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 bg-primary-600 hover:bg-primary-700 rounded-xl flex items-center justify-center transition-colors"
                     aria-label="Facebook"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -132,8 +209,10 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    href="#"
-                    className="w-12 h-12 bg-primary-600 hover:bg-primary-700 rounded-full flex items-center justify-center transition-colors"
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 bg-primary-600 hover:bg-primary-700 rounded-xl flex items-center justify-center transition-colors"
                     aria-label="Instagram"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -143,8 +222,10 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    href="#"
-                    className="w-12 h-12 bg-primary-600 hover:bg-primary-700 rounded-full flex items-center justify-center transition-colors"
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 bg-primary-600 hover:bg-primary-700 rounded-xl flex items-center justify-center transition-colors"
                     aria-label="LinkedIn"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -156,42 +237,87 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-gray-50 rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-primary-900 font-heading mb-6">
+            <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 border border-gray-100">
+              <h2 className="text-2xl font-bold text-primary-900 mb-6">
                 Send Us a Message
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
+
+              {/* Success Message */}
+              {submitStatus === "success" && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-start gap-3">
+                  <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-green-800">Message sent successfully!</p>
+                    <p className="text-sm text-green-700">We&apos;ll get back to you as soon as possible.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {submitStatus === "error" && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+                  <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-red-800">Something went wrong</p>
+                    <p className="text-sm text-red-700">Please try again or contact us directly.</p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name *
+                    Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                      errors.name ? "border-red-300 bg-red-50" : "border-gray-200"
+                    }`}
                     placeholder="Your name"
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address *
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                        errors.email ? "border-red-300 bg-red-50" : "border-gray-200"
+                      }`}
                       placeholder="your@email.com"
                     />
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -203,7 +329,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -211,15 +337,16 @@ export default function ContactPage() {
 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Subject *
+                    Subject <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="subject"
                     name="subject"
-                    required
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                      errors.subject ? "border-red-300 bg-red-50" : "border-gray-200"
+                    }`}
                   >
                     <option value="">Select a subject</option>
                     <option value="membership">Membership Inquiry</option>
@@ -228,30 +355,62 @@ export default function ContactPage() {
                     <option value="general">General Question</option>
                     <option value="other">Other</option>
                   </select>
+                  {errors.subject && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {errors.subject}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Message *
+                    Message <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    required
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none ${
+                      errors.message ? "border-red-300 bg-red-50" : "border-gray-200"
+                    }`}
                     placeholder="How can we help you?"
                   />
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-primary-700 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-primary-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary-600/25"
                 >
-                  Send Message
-                  <ArrowOutwardIcon className="w-5 h-5" />
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -260,7 +419,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="h-96 bg-gray-200">
+      <section className="h-96 bg-gray-100 relative">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095919364!2d-73.6201!3d40.7062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzIyLjMiTiA3M8KwMzcnMTIuNCJX!5e0!3m2!1sen!2sus!4v1234567890"
           width="100%"
@@ -272,6 +431,6 @@ export default function ContactPage() {
           title="Hempstead Chamber of Commerce Location"
         />
       </section>
-    </main>
+    </div>
   );
 }

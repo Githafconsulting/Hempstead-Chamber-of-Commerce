@@ -10,7 +10,6 @@ const newsItems = [
     category: "Event",
     image: "/highlights/509360252_9974143712664151_4431309747412328761_n.jpg",
     link: "/news-updates#small-business-saturday",
-    hashtags: ["#shoplocal", "#SmallBusinessSaturday"],
   },
   {
     id: 2,
@@ -20,7 +19,6 @@ const newsItems = [
     category: "Networking",
     image: "/highlights/508830097_9954289907982865_101481004878060619_n.jpg",
     link: "/news-updates#networking-event",
-    hashtags: ["#networking", "#community"],
   },
   {
     id: 3,
@@ -30,93 +28,132 @@ const newsItems = [
     category: "Membership",
     image: "/highlights/485156190_1087471683409197_592034467281624493_n.jpg",
     link: "/news-updates#new-members",
-    hashtags: ["#welcome", "#growth"],
   },
 ];
 
 export default function NewsUpdates() {
   return (
-    <section className="py-12 sm:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-100/30 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-12">
-          <span className="text-primary-600 font-semibold uppercase tracking-wide text-sm">
-            Stay Informed
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary-900 font-heading mt-2 mb-4">
-            News & Updates
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            Stay up to date with the latest news, events, and announcements from the Hempstead Chamber of Commerce
-          </p>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-6">
+              <span className="w-2 h-2 bg-primary-500 rounded-full" />
+              <span className="text-primary-700 font-semibold text-sm">Stay Informed</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-900 font-heading mb-4">
+              News & Updates
+            </h2>
+            <p className="text-lg text-gray-600 max-w-xl">
+              The latest from the Hempstead Chamber community
+            </p>
+          </div>
+          <Link
+            href="/news-updates"
+            className="hidden lg:inline-flex items-center gap-2 text-primary-600 font-semibold hover:gap-3 transition-all"
+          >
+            View All News
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
 
-        {/* News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
-          {newsItems.map((item) => (
+        {/* News Grid - Featured layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-10">
+          {/* Featured Article */}
+          <article className="group lg:row-span-2 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-200">
+            <div className="relative h-64 lg:h-80 overflow-hidden">
+              <Image
+                src={newsItems[0].image}
+                alt={newsItems[0].title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-950/20 to-transparent" />
+              <div className="absolute top-4 left-4">
+                <span className="px-3 py-1.5 bg-primary-600 text-white rounded-lg text-xs font-semibold">
+                  {newsItems[0].category}
+                </span>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-2 text-white/70 text-sm mb-3">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {newsItems[0].date}
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-white mb-3">
+                  {newsItems[0].title}
+                </h3>
+                <p className="text-white/80 leading-relaxed hidden sm:block">
+                  {newsItems[0].excerpt}
+                </p>
+              </div>
+            </div>
+            <div className="p-6 lg:hidden">
+              <p className="text-gray-600 leading-relaxed mb-4">
+                {newsItems[0].excerpt}
+              </p>
+              <Link
+                href={newsItems[0].link}
+                className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm"
+              >
+                Read More
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          </article>
+
+          {/* Secondary Articles */}
+          {newsItems.slice(1).map((item) => (
             <article
               key={item.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group"
+              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-200 flex flex-col sm:flex-row lg:flex-col"
             >
-              {/* Image */}
-              <div className="h-48 bg-primary-100 relative overflow-hidden">
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <svg className="w-16 h-16 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                    </svg>
-                  </div>
-                )}
+              <div className="relative h-48 sm:h-auto sm:w-1/3 lg:w-full lg:h-48 overflow-hidden flex-shrink-0">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
                 <div className="absolute top-3 left-3">
-                  <span className="px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-primary-600">
+                  <span className="px-3 py-1.5 bg-primary-600 text-white rounded-lg text-xs font-semibold">
                     {item.category}
                   </span>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <div className="p-5 flex flex-col flex-grow">
+                <div className="flex items-center gap-2 text-gray-500 text-sm mb-3">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>{item.date}</span>
+                  {item.date}
                 </div>
 
-                <h3 className="text-xl font-bold text-primary-900 font-heading mb-2 group-hover:text-primary-600 transition-colors">
+                <h3 className="text-xl font-bold text-primary-900 mb-2 group-hover:text-primary-600 transition-colors">
                   {item.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
                   {item.excerpt}
                 </p>
 
-                {/* Hashtags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.hashtags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="text-xs text-primary-600 font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
                 <Link
                   href={item.link}
-                  className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm hover:text-primary-700 transition-colors"
+                  className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm group-hover:gap-3 transition-all"
                 >
                   Read More
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </Link>
               </div>
@@ -124,15 +161,15 @@ export default function NewsUpdates() {
           ))}
         </div>
 
-        {/* View All Button */}
-        <div className="text-center">
+        {/* Mobile CTA */}
+        <div className="text-center lg:hidden">
           <Link
             href="/news-updates"
-            className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-primary-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-full font-bold hover:bg-primary-700 transition-all shadow-lg shadow-primary-600/25"
           >
-            View All News & Updates
+            View All News
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
         </div>

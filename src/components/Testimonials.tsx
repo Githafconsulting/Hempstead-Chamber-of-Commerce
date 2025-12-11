@@ -39,18 +39,6 @@ const testimonials = [
     business: "Brown's Bakery & Cafe",
     role: "Owner",
   },
-  {
-    quote: "I've attended every Chamber event this year. The quality of connections and the supportive community atmosphere is unlike anything I've experienced before.",
-    name: "Jennifer Martinez",
-    business: "Martinez Financial Services",
-    role: "Financial Advisor",
-  },
-  {
-    quote: "The Chamber's advocacy for small businesses in Hempstead makes a real difference. They truly care about helping local businesses succeed and thrive.",
-    name: "Robert Taylor",
-    business: "Taylor Home Services",
-    role: "President",
-  },
 ];
 
 export default function Testimonials() {
@@ -59,7 +47,6 @@ export default function Testimonials() {
   const [isPaused, setIsPaused] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Calculate number of slides based on screen size (3 testimonials per slide on desktop)
   const itemsPerSlide = 3;
   const totalSlides = Math.ceil(testimonials.length / itemsPerSlide);
 
@@ -84,13 +71,12 @@ export default function Testimonials() {
     setTimeout(() => setIsAnimating(false), 600);
   };
 
-  // Auto-slide effect
   useEffect(() => {
     if (isPaused) return;
 
     timeoutRef.current = setTimeout(() => {
       nextSlide();
-    }, 6000); // Change slide every 6 seconds
+    }, 6000);
 
     return () => {
       if (timeoutRef.current) {
@@ -99,22 +85,29 @@ export default function Testimonials() {
     };
   }, [activeSlide, isPaused, isAnimating]);
 
-  // Get testimonials for current slide
   const getCurrentTestimonials = () => {
     const startIdx = activeSlide * itemsPerSlide;
     return testimonials.slice(startIdx, startIdx + itemsPerSlide);
   };
 
   return (
-    <section className="py-12 sm:py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-100/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-900 font-heading mb-3 sm:mb-4">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-6">
+            <span className="w-2 h-2 bg-primary-500 rounded-full" />
+            <span className="text-primary-700 font-semibold text-sm">Member Stories</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-900 font-heading mb-4">
             What Our Members Say
           </h2>
-          <p className="text-base sm:text-lg text-gray-600">
-            Hear from business owners who are part of our community
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Real stories from business owners thriving in our community
           </p>
         </div>
 
@@ -124,11 +117,11 @@ export default function Testimonials() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Previous Button */}
+          {/* Navigation Buttons - Desktop */}
           <button
             onClick={prevSlide}
             disabled={isAnimating}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-20 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-20 w-14 h-14 bg-white rounded-2xl shadow-lg items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-100 hover:border-primary-600"
             aria-label="Previous testimonials"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,42 +130,41 @@ export default function Testimonials() {
           </button>
 
           {/* Testimonials Grid */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden px-2">
             <div
               key={activeSlide}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-slideIn"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 animate-slideIn"
             >
               {getCurrentTestimonials().map((testimonial, idx) => (
                 <div
                   key={`${activeSlide}-${idx}`}
-                  className="bg-white rounded-xl shadow-lg p-6 flex flex-col h-full"
+                  className="group bg-white rounded-2xl p-8 flex flex-col h-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-100"
                 >
-                  {/* Quote Icon */}
-                  <div className="text-primary-100 mb-4">
-                    <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
                   </div>
 
                   {/* Quote */}
-                  <p className="text-gray-700 leading-relaxed mb-6 italic flex-grow">
+                  <p className="text-gray-700 leading-relaxed mb-8 flex-grow text-lg">
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
 
                   {/* Author */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                    <div className="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                  <div className="flex items-center gap-4 pt-6 border-t border-gray-100">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center text-white font-bold text-xl flex-shrink-0 shadow-lg shadow-primary-500/25">
                       {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <div className="font-bold text-primary-900 font-heading">
+                      <div className="font-bold text-primary-900 text-lg">
                         {testimonial.name}
                       </div>
                       <div className="text-sm text-gray-500">
-                        {testimonial.role}
-                      </div>
-                      <div className="text-xs text-gray-400">
-                        {testimonial.business}
+                        {testimonial.role}, {testimonial.business}
                       </div>
                     </div>
                   </div>
@@ -181,79 +173,73 @@ export default function Testimonials() {
             </div>
           </div>
 
-          {/* Next Button */}
+          {/* Next Button - Desktop */}
           <button
             onClick={nextSlide}
             disabled={isAnimating}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-20 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-20 w-14 h-14 bg-white rounded-2xl shadow-lg items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-100 hover:border-primary-600"
             aria-label="Next testimonials"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="flex items-center justify-center gap-6 mt-10">
+          {/* Mobile Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            disabled={isAnimating}
+            className="lg:hidden w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-all duration-300 disabled:opacity-50 border border-gray-100"
+            aria-label="Previous testimonials"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Navigation Dots */}
+          <div className="flex gap-3">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                disabled={isAnimating}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  index === activeSlide
+                    ? "bg-primary-600 w-8"
+                    : "bg-gray-300 hover:bg-gray-400 w-2"
+                } disabled:cursor-not-allowed`}
+                aria-label={`View slide ${index + 1}`}
+              />
+            ))}
+          </div>
 
           {/* Mobile Navigation Buttons */}
-          <div className="flex lg:hidden justify-center gap-4 mt-6">
-            <button
-              onClick={prevSlide}
-              disabled={isAnimating}
-              className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-colors disabled:opacity-50"
-              aria-label="Previous testimonials"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={nextSlide}
-              disabled={isAnimating}
-              className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-colors disabled:opacity-50"
-              aria-label="Next testimonials"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+          <button
+            onClick={nextSlide}
+            disabled={isAnimating}
+            className="lg:hidden w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-primary-600 hover:bg-primary-600 hover:text-white transition-all duration-300 disabled:opacity-50 border border-gray-100"
+            aria-label="Next testimonials"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
-
-        {/* Navigation Dots */}
-        <div className="flex justify-center gap-3 mt-8">
-          {Array.from({ length: totalSlides }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              disabled={isAnimating}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === activeSlide
-                  ? "bg-primary-600 scale-125"
-                  : "bg-gray-300 hover:bg-gray-400"
-              } disabled:cursor-not-allowed`}
-              aria-label={`View slide ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Pause Indicator */}
-        {isPaused && (
-          <div className="text-center mt-4">
-            <span className="text-xs text-gray-400">
-              Paused - Move mouse away to resume
-            </span>
-          </div>
-        )}
       </div>
 
       <style jsx>{`
         @keyframes slideIn {
           from {
             opacity: 0;
-            transform: translateX(20px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
           }
         }
 

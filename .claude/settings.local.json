@@ -19,7 +19,12 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nImprove homepage layout with modern design\n\n- Streamline homepage from 10 sections to 6 for better flow\n- Use combined AboutAndBenefits component for side-by-side layout\n- Use combined TestimonialsAndEvents component for better visual balance\n- Remove gradient backgrounds from FeaturedBusinesses per design requirements\n- Remove redundant sections (WhyJoin, AboutUs, OurCommunity, SupportLocalBusinesses)\n- Maintain current theme without emojis or gradients\n- Build verified successfully\n\nGenerated with Claude Code\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git revert:*)",
       "Bash(git stash:*)",
-      "Bash(git stash pop:*)"
+      "Bash(git stash pop:*)",
+      "Bash(git stash drop:*)",
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(taskkill:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []
