@@ -38,12 +38,15 @@ export default function EventHighlightsPage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-primary-600 py-20">
+      <section className="bg-primary-600 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white font-heading mb-4">
+          <span className="text-primary-200 font-semibold uppercase tracking-wide text-sm">
+            Community Moments
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-heading mt-2 mb-4">
             Event Highlights
           </h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto">
             A glimpse into our community activities and events
           </p>
         </div>
